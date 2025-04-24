@@ -137,3 +137,4 @@
 /Users/Nikoloz/Desktop/Server/obj/Debug/net9.0/Server.pdb
 /Users/Nikoloz/Desktop/Server/obj/Debug/net9.0/Server.genruntimeconfig.cache
 /Users/Nikoloz/Desktop/Server/obj/Debug/net9.0/ref/Server.dll
+/Users/Nikoloz/Desktop/Server/obj/Debug/net9.0/Server.sourcelink.json
