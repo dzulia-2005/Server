@@ -1,6 +1,6 @@
-namespace Server.Dtos.Stock
+namespace Server.Dto.Stock
 {
-    public class StockDtos
+    public class StockDto
     {
         public int ID { get; set; }
         public string Title { get; set; } = string.Empty;

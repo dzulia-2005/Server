@@ -1,13 +1,13 @@
 using API.Models;
-using Server.Dtos.Stock;
+using Server.Dto.Stock;
 
 namespace Server.Mappers
 {
     public static class StockMappers
     {
-        public static StockDtos ToStockDto (this Stock stockModel) 
+        public static StockDto ToStockDto (this Stock stockModel) 
         {
-            return new StockDtos 
+            return new StockDto
             {
                 ID = stockModel.ID,
                 Title = stockModel.Title,
