@@ -23,6 +23,7 @@ builder.Services.AddDbContext<ApplicationDBcontext>(options => {
 });
 
 builder.Services.AddScoped<IStockRepository,StockRepository>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
