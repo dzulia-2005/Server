@@ -1,5 +1,8 @@
+using System.Runtime.Intrinsics.X86;
 using API.Models;
 using Server.Dto.Stock;
+using API.Models;
+using Server.Dto.Comment;
 
 namespace Server.Mappers
 {
@@ -15,7 +18,8 @@ namespace Server.Mappers
                 Purchase = stockModel.Purchase,
                 LastDividend = stockModel.LastDividend,
                 Industry = stockModel.Industry,
-                MarketCap = stockModel.MarketCap
+                MarketCap = stockModel.MarketCap,
+                Comments = stockModel.Comments.Select(x => x.ToCommentDto()).ToList(),
             };
         }
 

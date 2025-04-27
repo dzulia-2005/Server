@@ -17,12 +17,12 @@ namespace Server.Repository
         }
         public Task<List<Stock>> GetAllAsync()
         {
-            return _context.Stock.ToListAsync();
+            return _context.Stock.Include(x => x.Comments).ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)
         {
-            return await _context.Stock.FindAsync(id);
+            return await _context.Stock.Include(x => x.Comments).FirstOrDefaultAsync(x=>x.ID==id);
         } 
 
         public async Task<Stock?> CreateAsync(Stock stockModel)
@@ -65,6 +65,11 @@ namespace Server.Repository
 
             return StockModel;
             
+        }
+
+        public Task<bool> StockExists(int id)
+        {
+            return _context.Stock.AnyAsync(s=>s.ID == id);
         }
 
     }
