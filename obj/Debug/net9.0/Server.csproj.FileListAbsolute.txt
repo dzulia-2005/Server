@@ -142,3 +142,5 @@
 /Users/Nikoloz/Desktop/Server/bin/Debug/net9.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 /Users/Nikoloz/Desktop/Server/bin/Debug/net9.0/Newtonsoft.Json.dll
 /Users/Nikoloz/Desktop/Server/bin/Debug/net9.0/Newtonsoft.Json.Bson.dll
+/Users/Nikoloz/Desktop/Server/bin/Debug/net9.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
+/Users/Nikoloz/Desktop/Server/bin/Debug/net9.0/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

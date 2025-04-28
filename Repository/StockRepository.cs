@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using API.Data;
 using API.Models;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Server.Dto.Stock;
@@ -24,7 +25,17 @@ namespace Server.Repository
                 stock = stock.Where(x => x.Company.Contains(query.Company));
             }
 
-            return stock.ToListAsync();
+            if (!string.IsNullOrWhiteSpace(query.SortBy))
+            {
+                if (query.SortBy.Equals("Company",StringComparison.Ordinal))
+                {
+                    stock = query.IsDescending ? stock.OrderByDescending(s=>s.Company) : stock.OrderBy(s=>s.Company);
+                }
+            }
+
+            var SkipNumber = (query.PageNumber -1) * (query.PageSize);
+            
+            return stock.Skip(SkipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)
