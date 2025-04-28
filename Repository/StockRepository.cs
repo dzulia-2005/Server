@@ -5,6 +5,7 @@ using API.Models;
 using Server.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Server.Dto.Stock;
+using Server.Helpers;
 
 namespace Server.Repository
 {
@@ -15,9 +16,15 @@ namespace Server.Repository
         {
             _context = context;
         }
-        public Task<List<Stock>> GetAllAsync()
+        public Task<List<Stock>> GetAllAsync(QueryObject query)
         {
-            return _context.Stock.Include(x => x.Comments).ToListAsync();
+            var stock =  _context.Stock.Include(x => x.Comments).AsQueryable();
+            if (!string.IsNullOrWhiteSpace(query.Company))
+            {
+                stock = stock.Where(x => x.Company.Contains(query.Company));
+            }
+
+            return stock.ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)

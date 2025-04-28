@@ -19,15 +19,15 @@ namespace Server.Mappers
                 LastDividend = stockModel.LastDividend,
                 Industry = stockModel.Industry,
                 MarketCap = stockModel.MarketCap,
-                Comments = stockModel.Comments.Select(x => x.ToCommentDto()).ToList(),
-            };
+                Comments = stockModel.Comments != null 
+                    ? stockModel.Comments.Select(x => x.ToCommentDto()).ToList()
+                    : new List<CommentDto>(),            };
         }
 
         public static Stock toStockFromCreateDTO(this CreateStockRequestDto stockDto)
         {
             return new Stock
             {
-                ID = stockDto.ID,
                 Company = stockDto.Company,
                 Purchase = stockDto.Purchase,
                 LastDividend = stockDto.LastDividend,
