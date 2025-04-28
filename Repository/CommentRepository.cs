@@ -48,6 +48,19 @@ namespace Server.Repository
             await _context.SaveChangesAsync();
             return exsitingComment;
         }
+
+        public async Task<Comments?> DeleteAsync(int id)
+        {
+            var comment = await _context.Comments.FirstOrDefaultAsync(x=>x.ID == id);
+            if (comment == null)
+            {
+                return null;
+            }
+
+            _context.Comments.Remove(comment);
+            await _context.SaveChangesAsync();
+            return comment;
+        }
         
     }
 }

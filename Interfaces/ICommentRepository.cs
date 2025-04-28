@@ -10,5 +10,6 @@ namespace Server.Interfaces
          Task<Comments?> GetByIdAsync(int id);
          Task<Comments?> CreateAsync(Comments commentModel);
          Task<Comments?> UpdateAsync(int id,Comments commentModel);
+         Task<Comments?> DeleteAsync(int id);
     }
 }
