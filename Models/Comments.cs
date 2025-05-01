@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace API.Models
 {
+    [Table("Comments")]
     public class Comments
     {
         public int ID { get; set; }

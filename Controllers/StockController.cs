@@ -7,6 +7,7 @@ using Server.Dto.Stock;
 using System.Numerics;
 using System.Runtime.Intrinsics.X86;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Server.Interfaces;
 using Server.Helpers;
@@ -27,6 +28,7 @@ namespace Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             if (!ModelState.IsValid)
@@ -67,8 +69,7 @@ namespace Server.Controllers
             return CreatedAtAction(nameof(GetById),new {ID=StockModel.ID},StockModel.ToStockDto());
         }
 
-        [HttpPut]
-        [Route("{id:int}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult>  Update([FromRoute] int id, [FromBody] UpdateStockRequestDto updateDto)
         {
             if (!ModelState.IsValid)
@@ -85,8 +86,7 @@ namespace Server.Controllers
         }
 
 
-        [HttpDelete]
-        [Route("{id:int}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)
