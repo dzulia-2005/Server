@@ -15,8 +15,7 @@ public class PortfolioController : ControllerBase
     private readonly IStockRepository _StockRepository;
     private readonly IPortfolioRepository _PortfolioRepository;
 
-    public PortfolioController(UserManager<AppUser> userManager, IStockRepository StockRepository,
-        IPortfolioRepository portfolioRepository)
+    public PortfolioController(UserManager<AppUser> userManager, IStockRepository StockRepository,IPortfolioRepository portfolioRepository)
     {
         _userManager = userManager;
         _StockRepository = StockRepository;
@@ -28,14 +27,46 @@ public class PortfolioController : ControllerBase
     public async Task<IActionResult> GetUserPortfolio()
     {
         var username = User.GetUsername();
-        if (string.IsNullOrEmpty(username))
-            return Unauthorized();
+        Console.WriteLine($"Username:{username}");
         var appUser = await _userManager.FindByNameAsync(username);
-        
-        if (appUser == null)
-            return NotFound();
-        
         var userPortfolio = await _PortfolioRepository.GetUserPortfolio(appUser);
         return Ok(userPortfolio);
+    }
+
+    [HttpPost]
+    [Authorize]
+
+    public async Task<IActionResult> AddPortfolio(string company)
+    {
+        var username = User.GetUsername();
+        var appUser = await _userManager.FindByNameAsync(username);
+        var stock = await _StockRepository.GetCompanyAsync(company);
+        if (stock == null)
+        {
+            return BadRequest("stock is not found");
+        }
+
+        var userPortfolio = await _PortfolioRepository.GetUserPortfolio(appUser);
+        if (userPortfolio.Any(e=>e.Company.ToLower()==company.ToLower()))
+        {
+            return BadRequest("can not add same stock to portfolio");
+        }
+
+        var portfolioModel = new Portfolio
+        {
+            StockId = stock.ID,
+            AppUserId = appUser.Id,
+            
+        };
+
+        await _PortfolioRepository.CreatePortfolio(portfolioModel);
+        if (portfolioModel==null)
+        {
+            return StatusCode(500, "Could not create");
+        }
+        else
+        {
+            return Created();
+        }
     }
 }

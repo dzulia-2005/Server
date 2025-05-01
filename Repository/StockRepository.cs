@@ -90,5 +90,10 @@ namespace Server.Repository
             return _context.Stock.AnyAsync(s=>s.ID == id);
         }
 
+        public async Task<Stock?> GetCompanyAsync(string company)
+        {
+            return await _context.Stock.FirstOrDefaultAsync(s=>s.Company == company);
+        }
+
     }
 }

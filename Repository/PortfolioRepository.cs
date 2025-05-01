@@ -25,9 +25,14 @@ public class PortfolioRepository : IPortfolioRepository
                     Industry = stock.stock.Industry,
                     MarketCap = stock.stock.MarketCap,
                     Title = stock.stock.Title,
-                    
-
                 }
             ).ToListAsync();
+    }
+
+    public async Task<Portfolio> CreatePortfolio(Portfolio portfolio)
+    {
+        await _context.Portfolios.AddAsync(portfolio);
+        await _context.SaveChangesAsync();
+        return portfolio;
     }
 }

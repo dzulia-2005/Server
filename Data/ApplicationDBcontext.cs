@@ -17,6 +17,7 @@ namespace API.Data
         public DbSet<Stock> Stock { get; set; }
         public DbSet<Comments> Comments { get; set; }
         public DbSet<Portfolio> Portfolios { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -24,7 +25,7 @@ namespace API.Data
             builder.Entity<Portfolio>(x=>x.HasKey(p=>new {p.AppUserId,p.StockId}));
             builder.Entity<Portfolio>()
                 //ერთ პორტფოლიოს ეკთვნის ერთი სტოკი
-                .HasOne(x=>x.stock)
+                .HasOne(x=>x.AppUser)
                 //აქ ეუბნება რომ სტოკს ჰყავს ბევრი პორტფოლიო
                 .WithMany(x=>x.Portfolios)
                 //მოდელი Portfolio უკავშირდება AppUser-ს და ეს კავშირი ხდება AppUserId ველის მეშვეობით.
