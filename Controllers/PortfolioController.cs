@@ -11,15 +11,16 @@ namespace Server.Controllers;
 [ApiController]
 public class PortfolioController : ControllerBase
 {
-    private readonly UserManager<AppUser> userManager;
-    private readonly IStockRepository StockRepository;
-    private readonly PortfolioRepository PortfolioRepository;
+    private readonly UserManager<AppUser> _userManager;
+    private readonly IStockRepository _StockRepository;
+    private readonly IPortfolioRepository _PortfolioRepository;
 
-    public PortfolioController(UserManager<AppUser> userManager, IStockRepository StockRepository,PortfolioRepository portfolioRepository)
+    public PortfolioController(UserManager<AppUser> userManager, IStockRepository StockRepository,
+        IPortfolioRepository portfolioRepository)
     {
-        this.userManager = userManager;
-        this.StockRepository = StockRepository;
-        this.PortfolioRepository = portfolioRepository;
+        _userManager = userManager;
+        _StockRepository = StockRepository;
+        _PortfolioRepository = portfolioRepository;
     }
 
     [HttpGet]
@@ -27,8 +28,14 @@ public class PortfolioController : ControllerBase
     public async Task<IActionResult> GetUserPortfolio()
     {
         var username = User.GetUsername();
-        var appUser = await this.userManager.FindByNameAsync(username);
-        var userPortfolio = await PortfolioRepository.GetUserPortfolio(appUser);
+        if (string.IsNullOrEmpty(username))
+            return Unauthorized();
+        var appUser = await _userManager.FindByNameAsync(username);
+        
+        if (appUser == null)
+            return NotFound();
+        
+        var userPortfolio = await _PortfolioRepository.GetUserPortfolio(appUser);
         return Ok(userPortfolio);
     }
 }
