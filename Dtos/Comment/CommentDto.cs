@@ -7,6 +7,8 @@ namespace Server.Dto.Comment
         public string Content {get;set;} = string.Empty;
         public DateTime CreateOn {get;set;} = DateTime.Now;
         public int? StockID { get; set; }
-       
+        
+        public string CreaateBy { get; set; } = string.Empty;
+
     }
 }

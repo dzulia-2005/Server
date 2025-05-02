@@ -20,12 +20,12 @@ namespace Server.Repository
 
         public async Task<List<Comments>> GetAllAsync()
         {
-            return await _context.Comments.ToListAsync();
+            return await _context.Comments.Include(x=>x.AppUser).ToListAsync();
         }
         
         public async Task<Comments?> GetByIdAsync(int id)
         {
-            return await _context.Comments.FirstOrDefaultAsync(x => x.ID == id);
+            return await _context.Comments.Include(x=>x.AppUser).FirstOrDefaultAsync(x => x.ID == id);
         }
 
         public async Task<Comments?> CreateAsync(Comments commentModel)

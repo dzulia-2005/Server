@@ -13,7 +13,8 @@ namespace Server.Mappers
                 Title = commentModel.Title,
                 Content = commentModel.Content,
                 CreateOn = commentModel.CreateOn,
-                StockID = commentModel.StockID
+                StockID = commentModel.StockID,
+                CreaateBy = commentModel.AppUser.UserName,
             };
         }
 
