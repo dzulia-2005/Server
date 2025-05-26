@@ -6,6 +6,7 @@ using System.Linq;
 using Server.Dto.Stock;
 using System.Numerics;
 using System.Runtime.Intrinsics.X86;
+using System.Security.Claims;
 using API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -27,8 +28,21 @@ namespace Server.Controllers
             _stockRepo = stockRepo;
         }
 
-        [HttpGet]
+        [HttpGet("getourstock")]
         [Authorize]
+        public async Task<IActionResult> getOurStocks()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            var userStock = await _stockRepo.GetStocksUserByIdAsync(userId);
+            return Ok(userStock.Select(s=>s.ToStockDto()));
+        }
+
+        [HttpGet]
         public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
             if (!ModelState.IsValid)
@@ -57,6 +71,7 @@ namespace Server.Controllers
             return Ok(stock.ToStockDto());
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateStockRequestDto stockDto)
         {
@@ -65,9 +80,19 @@ namespace Server.Controllers
                 return BadRequest(ModelState);
             }
             var StockModel = stockDto.toStockFromCreateDTO();
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            if (userId == null)
+            {
+                return Unauthorized();
+            }
+
+            StockModel.CreatedUserById = userId;
+            
             await _stockRepo.CreateAsync(StockModel);
+            
             return CreatedAtAction(nameof(GetById),new {ID=StockModel.ID},StockModel.ToStockDto());
         }
+        
 
         [HttpPut("{id:int}")]
         public async Task<IActionResult>  Update([FromRoute] int id, [FromBody] UpdateStockRequestDto updateDto)
@@ -101,5 +126,6 @@ namespace Server.Controllers
             
             return NoContent();
         }
+        
     }
 }

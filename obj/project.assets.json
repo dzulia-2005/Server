@@ -4654,11 +4654,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/Nikoloz/Desktop/Server/Server.csproj",
+      "projectUniqueName": "/Users/Nikoloz/Desktop/SocialNetworkAPI/Server.csproj",
       "projectName": "Server",
-      "projectPath": "/Users/Nikoloz/Desktop/Server/Server.csproj",
+      "projectPath": "/Users/Nikoloz/Desktop/SocialNetworkAPI/Server.csproj",
       "packagesPath": "/Users/Nikoloz/.nuget/packages/",
-      "outputPath": "/Users/Nikoloz/Desktop/Server/obj/",
+      "outputPath": "/Users/Nikoloz/Desktop/SocialNetworkAPI/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/Users/Nikoloz/.nuget/NuGet/NuGet.Config"

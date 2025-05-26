@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qzcqo9vuQH4=",
+  "dgSpecHash": "RSY4jrBayrA=",
   "success": true,
-  "projectFilePath": "/Users/Nikoloz/Desktop/Server/Server.csproj",
+  "projectFilePath": "/Users/Nikoloz/Desktop/SocialNetworkAPI/Server.csproj",
   "expectedPackageFiles": [
     "/Users/Nikoloz/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/Nikoloz/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",

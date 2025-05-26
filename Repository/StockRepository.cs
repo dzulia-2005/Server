@@ -95,5 +95,13 @@ namespace Server.Repository
             return await _context.Stock.FirstOrDefaultAsync(s=>s.Company == company);
         }
 
+        public async Task<List<Stock?>> GetStocksUserByIdAsync(string userId)
+        {
+            return await _context.Stock
+                .Where(s => s.CreatedUserById == userId)
+                .ToListAsync();
+        }
+
+
     }
 }

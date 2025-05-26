@@ -24,11 +24,8 @@ namespace API.Data
             
             builder.Entity<Portfolio>(x=>x.HasKey(p=>new {p.AppUserId,p.StockId}));
             builder.Entity<Portfolio>()
-                //ერთ პორტფოლიოს ეკთვნის ერთი სტოკი
                 .HasOne(x=>x.AppUser)
-                //აქ ეუბნება რომ სტოკს ჰყავს ბევრი პორტფოლიო
                 .WithMany(x=>x.Portfolios)
-                //მოდელი Portfolio უკავშირდება AppUser-ს და ეს კავშირი ხდება AppUserId ველის მეშვეობით.
                 .HasForeignKey(x=>x.AppUserId);
             
             builder.Entity<Portfolio>()

@@ -1,4 +1,8 @@
+using System.Security.Claims;
+using API.Data;
 using API.Models;
+using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,12 +18,18 @@ public class AccountController:ControllerBase
     private readonly UserManager<AppUser> _userManager;
     private readonly ITokenServices _tokenServices;
     private readonly SignInManager<AppUser> _signInManager;
+    private readonly ApplicationDBcontext _context;
 
-    public AccountController(UserManager<AppUser> userManager,ITokenServices tokenServices,SignInManager<AppUser> signInManager)
+    public AccountController(UserManager<AppUser> userManager,
+        ITokenServices tokenServices,
+        SignInManager<AppUser> signInManager,
+        ApplicationDBcontext context
+        )
     {
         _userManager = userManager;
         _tokenServices = tokenServices;
         _signInManager = signInManager;
+        _context = context;
     }
 
     [HttpPost("register")]
@@ -38,15 +48,14 @@ public class AccountController:ControllerBase
                 var roles = await _userManager.AddToRoleAsync(appUser,"User");
                 if (roles.Succeeded)
                 {
-                    return Ok
-                    (
-                        new NewUserDto
+                    var accessToken = _tokenServices.CreateToken(appUser);
+                    var refreshToken = await _tokenServices.GenerateAndSaveRefreshToken(appUser);
+                    return Ok(new NewUserDto
                         {
-                            Email = registerDto.Email,
-                            UserName = registerDto.Username,
-                            Token = _tokenServices.CreateToken(appUser)
-                        }
-                        );
+                            Token = accessToken,
+                            RefreshToken = refreshToken
+                            
+                        });
                 }
                 else
                 {
@@ -84,13 +93,92 @@ public class AccountController:ControllerBase
             return Unauthorized("invalid username or password is incrrect");
         }
 
+        var accessToken = _tokenServices.CreateToken(user);
+        var refreshToken = await _tokenServices.GenerateAndSaveRefreshToken(user);
+        
+
         return Ok(
             new NewUserDto
             {
-                UserName = user.UserName,
-                Email = user.Email,
-                Token = _tokenServices.CreateToken(user)
+                Token = accessToken,
+                RefreshToken = refreshToken,
             }
         );
+    }
+
+
+    [Authorize]
+    [HttpGet("me")]
+    public async Task<IActionResult> Me()
+    {
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        if (string.IsNullOrEmpty(userId))
+        {
+            return Unauthorized();
+        }
+
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var stock = await _context.Stock
+            .Where(s => s.CreatedUserById == userId)
+            .Select(s => new
+            {
+                s.ID,
+                s.Company,
+                s.Title,
+                s.Purchase,
+                s.Industry,
+                Comments = s.Comments.Select(c => new
+                {
+                    c.ID,
+                    c.Title,
+                    c.Content,
+                    c.StockID
+                })
+            })
+            .ToListAsync();
+        
+        var result = new
+        {
+            user.Id,
+            user.UserName,
+            user.Email,
+            stocks = stock
+        };
+
+        return Ok(result);
+    }
+
+    
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return Ok();
+    }
+
+    [Authorize]
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> refreshToken([FromBody] RefreshTokenRequest request)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(x => x.RefreshToken == request.RefreshToken);
+        if (user == null || user.RefreshTokenExpiry < DateTime.UtcNow )
+        {
+            return Unauthorized("Invalid or expired refresh token");
+        }
+
+        var newAccessToken = _tokenServices.CreateToken(user);
+        var newRefreshToken = await _tokenServices.GenerateAndSaveRefreshToken(user);
+
+        return Ok(new
+        {
+            AccessToken = newAccessToken,
+            refreshToken = newRefreshToken,
+        });
     }
 }

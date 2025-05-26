@@ -18,5 +18,6 @@ namespace API.Models
         public long MarketCap { get; set; }
         public List<Comments> Comments { get; set; }
         public List<Portfolio> Portfolios { get; set; } = new List<Portfolio>();
+        public string CreatedUserById { get; set; }
     }
 }
