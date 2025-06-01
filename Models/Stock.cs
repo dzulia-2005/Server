@@ -19,5 +19,6 @@ namespace API.Models
         public List<Comments> Comments { get; set; }
         public List<Portfolio> Portfolios { get; set; } = new List<Portfolio>();
         public string CreatedUserById { get; set; }
+        public string? ImageUrl { get; set; }
     }
 }

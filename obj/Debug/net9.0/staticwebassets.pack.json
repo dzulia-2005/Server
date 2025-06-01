@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/b4d6d7e7-fc46-4604-8e37-19f7fa53e964.png",
+      "PackagePath": "staticwebassets/uploads/b4d6d7e7-fc46-4604-8e37-19f7fa53e964.png"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.Server.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.Server.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.build.Server.props",
+      "PackagePath": "build\\Server.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.buildMultiTargeting.Server.props",
+      "PackagePath": "buildMultiTargeting\\Server.props"
+    },
+    {
+      "Id": "obj/Debug/net9.0/staticwebassets/msbuild.buildTransitive.Server.props",
+      "PackagePath": "buildTransitive\\Server.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

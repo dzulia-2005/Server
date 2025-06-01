@@ -12,6 +12,7 @@ namespace Server.Dto.Stock
         public decimal LastDividend { get; set; }
         public string Industry { get; set; } = string.Empty;
         public long MarketCap { get; set; }
+        public string? ImageUrl { get; set; }
         public List<CommentDto> Comments { get; set; }
     }
 }

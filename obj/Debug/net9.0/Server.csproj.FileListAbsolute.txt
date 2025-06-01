@@ -290,3 +290,4 @@
 /Users/Nikoloz/Desktop/SocialNetworkAPI/obj/Debug/net9.0/Server.pdb
 /Users/Nikoloz/Desktop/SocialNetworkAPI/obj/Debug/net9.0/Server.genruntimeconfig.cache
 /Users/Nikoloz/Desktop/SocialNetworkAPI/obj/Debug/net9.0/ref/Server.dll
+/Users/Nikoloz/Desktop/SocialNetworkAPI/bin/Debug/net9.0/Server.staticwebassets.runtime.json

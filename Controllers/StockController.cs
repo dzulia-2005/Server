@@ -73,25 +73,39 @@ namespace Server.Controllers
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateStockRequestDto stockDto)
+        public async Task<IActionResult> Create([FromForm] CreateStockRequestDto stockDto)
         {
-            if (!ModelState.IsValid)
+            string? imageUrl = null;
+
+            if (stockDto.ImageUrl != null && stockDto.ImageUrl.Length > 0)
             {
-                return BadRequest(ModelState);
-            }
-            var StockModel = stockDto.toStockFromCreateDTO();
-            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            if (userId == null)
-            {
-                return Unauthorized();
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(stockDto.ImageUrl.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await stockDto.ImageUrl.CopyToAsync(stream);
+                }
+
+                imageUrl = "/uploads/" + fileName;
             }
 
-            StockModel.CreatedUserById = userId;
-            
-            await _stockRepo.CreateAsync(StockModel);
-            
-            return CreatedAtAction(nameof(GetById),new {ID=StockModel.ID},StockModel.ToStockDto());
+            var stock = new Stock
+            {
+                Title = stockDto.Title,
+                Company = stockDto.Company,
+                LastDividend = stockDto.LastDividend,
+                Industry = stockDto.Industry,
+                MarketCap = stockDto.MarketCap,
+                ImageUrl = imageUrl
+            };
+
+            _context.Stock.Add(stock);
+            await _context.SaveChangesAsync();
+
+            return Ok(stock);
         }
+
         
 
         [HttpPut("{id:int}")]
