@@ -21,7 +21,9 @@ namespace Server.Mappers
                 MarketCap = stockModel.MarketCap,
                 Comments = stockModel.Comments != null 
                     ? stockModel.Comments.Select(x => x.ToCommentDto()).ToList()
-                    : new List<CommentDto>(),            };
+                    : new List<CommentDto>(),
+                ImageUrl = stockModel.ImageUrl,
+            };
         }
 
         public static Stock toStockFromCreateDTO(this CreateStockRequestDto stockDto)

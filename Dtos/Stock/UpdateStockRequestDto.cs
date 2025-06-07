@@ -23,5 +23,6 @@ namespace Server.Dto.Stock
         [Required]
         [Range(1,500000000)]
         public long MarketCap { get; set; }
+        public IFormFile? ImageUrl { get; set; } 
     }
 }

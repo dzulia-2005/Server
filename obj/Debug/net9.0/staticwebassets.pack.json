@@ -1,8 +1,60 @@
 {
   "Files": [
     {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/04163111-4686-4a63-9177-8e9a46e71b4f.jpeg",
+      "PackagePath": "staticwebassets/uploads/04163111-4686-4a63-9177-8e9a46e71b4f.jpeg"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/32a78e96-014e-45d0-8cb7-e0b6233e41ab.jpeg",
+      "PackagePath": "staticwebassets/uploads/32a78e96-014e-45d0-8cb7-e0b6233e41ab.jpeg"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/3b977920-08ad-43a0-8687-6ebbd745f0e6.webp",
+      "PackagePath": "staticwebassets/uploads/3b977920-08ad-43a0-8687-6ebbd745f0e6.webp"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/5b5761ab-bba6-4fbf-ae22-33180dbaa783.jpeg",
+      "PackagePath": "staticwebassets/uploads/5b5761ab-bba6-4fbf-ae22-33180dbaa783.jpeg"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/6b857a81-16aa-4431-b3b9-29c4136a2242.jpeg",
+      "PackagePath": "staticwebassets/uploads/6b857a81-16aa-4431-b3b9-29c4136a2242.jpeg"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/8ae37e40-4ade-46c4-9ae8-e828da021081.jpeg",
+      "PackagePath": "staticwebassets/uploads/8ae37e40-4ade-46c4-9ae8-e828da021081.jpeg"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/b0ca218d-3331-4324-9e76-77103a83bd1a.webp",
+      "PackagePath": "staticwebassets/uploads/b0ca218d-3331-4324-9e76-77103a83bd1a.webp"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/b30c30ea-94b1-488a-ac14-65a0301f763f.jpeg",
+      "PackagePath": "staticwebassets/uploads/b30c30ea-94b1-488a-ac14-65a0301f763f.jpeg"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/b408fea3-304c-4b3d-92d4-90400d5c25c9.jpeg",
+      "PackagePath": "staticwebassets/uploads/b408fea3-304c-4b3d-92d4-90400d5c25c9.jpeg"
+    },
+    {
       "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/b4d6d7e7-fc46-4604-8e37-19f7fa53e964.png",
       "PackagePath": "staticwebassets/uploads/b4d6d7e7-fc46-4604-8e37-19f7fa53e964.png"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/b63ec185-f3b2-4363-bb6b-36f013435dc2.png",
+      "PackagePath": "staticwebassets/uploads/b63ec185-f3b2-4363-bb6b-36f013435dc2.png"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/bcb6a9de-c108-43a1-8d24-f7a0b0af847f.png",
+      "PackagePath": "staticwebassets/uploads/bcb6a9de-c108-43a1-8d24-f7a0b0af847f.png"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/f0909ec9-fba8-4a18-9cc9-2ce2d6c8be21.jpeg",
+      "PackagePath": "staticwebassets/uploads/f0909ec9-fba8-4a18-9cc9-2ce2d6c8be21.jpeg"
+    },
+    {
+      "Id": "/Users/Nikoloz/Desktop/SocialNetworkAPI/wwwroot/uploads/f483ecdb-8bef-4e8a-861d-81157844b4eb.jpeg",
+      "PackagePath": "staticwebassets/uploads/f483ecdb-8bef-4e8a-861d-81157844b4eb.jpeg"
     },
     {
       "Id": "obj/Debug/net9.0/staticwebassets/msbuild.Server.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",

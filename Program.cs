@@ -8,7 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using Server.Interfaces;
 using Server.Repository;
 using Server.Services;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.FileProviders;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +66,9 @@ builder.Services.AddIdentity<AppUser, IdentityRole>(options =>
     options.Password.RequiredLength = 8;
 }).AddEntityFrameworkStores<ApplicationDBcontext>();
 
+
+
+
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = 
@@ -112,6 +115,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseStaticFiles();
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads")),
+    RequestPath = "/uploads"
+});
 
 app.UseCors("AllowFrontend");
 

@@ -72,11 +72,12 @@ namespace Server.Controllers
         }
 
         [Authorize]
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromForm] CreateStockRequestDto stockDto)
         {
             string? imageUrl = null;
-
+            var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            
             if (stockDto.ImageUrl != null && stockDto.ImageUrl.Length > 0)
             {
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(stockDto.ImageUrl.FileName);
@@ -97,7 +98,8 @@ namespace Server.Controllers
                 LastDividend = stockDto.LastDividend,
                 Industry = stockDto.Industry,
                 MarketCap = stockDto.MarketCap,
-                ImageUrl = imageUrl
+                ImageUrl = imageUrl,
+                CreatedUserById = userId
             };
 
             _context.Stock.Add(stock);
@@ -108,14 +110,32 @@ namespace Server.Controllers
 
         
 
-        [HttpPut("{id:int}")]
-        public async Task<IActionResult>  Update([FromRoute] int id, [FromBody] UpdateStockRequestDto updateDto)
+        [HttpPut("edit/{id:int}")]
+        public async Task<IActionResult>  Update([FromRoute] int id, [FromForm] UpdateStockRequestDto updateDto)
         {
+            
+            string? imageUrl = null;
+            
+            if (updateDto.ImageUrl != null && updateDto.ImageUrl.Length > 0)
+            {
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(updateDto.ImageUrl.FileName);
+                var filePath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", fileName);
+
+                using (var stream = new FileStream(filePath, FileMode.Create))
+                {
+                    await updateDto.ImageUrl.CopyToAsync(stream);
+                }
+
+                imageUrl = "/uploads/" + fileName;
+            }
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var StockModel = await _stockRepo.UpdateAsync(id,updateDto);
+            
+            var StockModel = await _stockRepo.UpdateAsync(id, updateDto, imageUrl);
+            
             if(StockModel == null)
             {
                 return NotFound();
@@ -125,7 +145,7 @@ namespace Server.Controllers
         }
 
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete("delete/{id:int}")]
         public async Task<IActionResult> Delete([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -137,6 +157,7 @@ namespace Server.Controllers
             {
                 return NotFound();
             }
+            
             
             return NoContent();
         }

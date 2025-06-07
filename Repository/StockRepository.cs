@@ -50,11 +50,11 @@ namespace Server.Repository
             return stockModel;
         }
 
-        public async Task<Stock?> UpdateAsync(int id, UpdateStockRequestDto stockDto)
+        public async Task<Stock?> UpdateAsync(int id, UpdateStockRequestDto stockDto, string? imageUrl)
         {
             var exsitingStock = await _context.Stock.FirstOrDefaultAsync(x => x.ID == id);
 
-            if(exsitingStock == null)
+            if (exsitingStock == null)
             {
                 return null;
             }
@@ -66,14 +66,24 @@ namespace Server.Repository
             exsitingStock.Industry = stockDto.Industry;
             exsitingStock.MarketCap = stockDto.MarketCap;
 
+           
+            if (!string.IsNullOrEmpty(imageUrl))
+            {
+                exsitingStock.ImageUrl = imageUrl;
+            }
+
             await _context.SaveChangesAsync();
 
             return exsitingStock;
         }
 
+
         public async Task<Stock?> DeleteAsync(int id)
         {
-            var StockModel = await _context.Stock.FirstOrDefaultAsync(x => x.ID == id);
+            var StockModel = await _context.Stock
+                .Include(s => s.Comments) // მოითხოვეთ Comments-ები Stock-თან ერთად
+                .FirstOrDefaultAsync(x => x.ID == id);
+
             if(StockModel == null)
             {
                 return null;

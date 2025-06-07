@@ -12,7 +12,7 @@ namespace Server.Interfaces
          Task<Stock?> GetByIdAsync(int id);
          Task<Stock?> GetCompanyAsync(string symbol);
          Task<Stock?> CreateAsync(Stock stockModel);
-         Task<Stock?> UpdateAsync(int id,UpdateStockRequestDto stockDto);
+         Task<Stock?> UpdateAsync(int id,UpdateStockRequestDto stockDto,string imageUrl);
          Task<Stock?> DeleteAsync(int id);
          Task<bool> StockExists(int id);
          Task<List<Stock?>> GetStocksUserByIdAsync(string userId);
